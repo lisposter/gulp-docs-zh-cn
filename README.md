@@ -1,28 +1,28 @@
-# gulp documentation
+# gulp 中文文档
 
-* [Getting Started](getting-started.md) - How to get going with gulp
-* [API documentation](API.md) - Learn the ins and outs of using gulp
-* [CLI documentation](CLI.md) - Learn how to call tasks and use compilers
-* [Writing a Plugin](writing-a-plugin/README.md) - So you're writing a gulp plugin? Go here for the essential dos and don'ts.
-* [Spanish documentation][SpanishDocs] - gulp en Español.
+* [入门指南](getting-started.md) - 如何开始使用 gulp
+* [API 文档](API.md) - 学习 gulp 的输入和输出方式
+* [CLI 文档](CLI.md) - 学习如何调用任务（task）以及一些编译器
+* [写一个插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
+* [Spanish documentation][SpanishDocs] - gulp 西班牙语文档.
 
 
 ## FAQ
 
-See the [FAQ](FAQ.md) for the answers to commonly asked questions.
+常见的问题，请查看 [FAQ](FAQ.md)。
 
 
-## Recipes
+## 范例
 
-The community has written [recipes](recipes#recipes) for common gulp use-cases.
-
-
-## Still got questions?
-
-Post on [StackOverflow with a #gulp tag](http://stackoverflow.com/questions/tagged/gulp), or come chat with us in [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) on [Freenode](http://freenode.net/).
+社区中对于常用的一些 gulp 应用场景已经有了一些现成的 [recipes](recipes#recipes)
 
 
-## Books
+## 还是有问题？
+
+到 [StackOverflow 发一个带有 #gulp 标签](http://stackoverflow.com/questions/tagged/gulp) 的问题，或者在  [Freenode](http://freenode.net/) 上的 [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) 频道寻求帮助。
+
+
+## 书籍
 * [Developing a gulp Edge](http://shop.oreilly.com/product/9781939902146.do)
 
 
@@ -40,7 +40,7 @@ Post on [StackOverflow with a #gulp tag](http://stackoverflow.com/questions/tagg
 * [Optimize your web code with gulp](http://www.linuxuser.co.uk/tutorials/optimise-your-web-code-with-gulp-js)
 
 
-## Examples
+## 例子
 
 - [Web Starter Kit gulpfile](https://github.com/google/web-starter-kit/blob/master/gulpfile.js)
 
