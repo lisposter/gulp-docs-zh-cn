@@ -4,7 +4,7 @@
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
 * [CLI 文档](CLI.md) - 学习如何调用任务（task）以及一些编译器
 * [写一个插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
-* [Spanish documentation][SpanishDocs] - gulp 西班牙语文档.
+* [西班牙语文档][SpanishDocs] - gulp 的西班牙语文档.
 
 
 ## FAQ
@@ -19,14 +19,14 @@
 
 ## 还是有问题？
 
-到 [StackOverflow 发一个带有 #gulp 标签](http://stackoverflow.com/questions/tagged/gulp) 的问题，或者在  [Freenode](http://freenode.net/) 上的 [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) 频道寻求帮助。
+到 [StackOverflow](http://stackoverflow.com/questions/tagged/gulp) 发一个带有 #gulp 标签的问题，或者在  [Freenode](http://freenode.net/) 上的 [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) 频道寻求帮助。
 
 
 ## 书籍
 * [Developing a gulp Edge](http://shop.oreilly.com/product/9781939902146.do)
 
 
-## Articles
+## 文章
 * [Tagtree intro to gulp video](http://tagtree.tv/gulp)
 * [Introduction to node.js streams](https://github.com/substack/stream-handbook)
 * [Video introduction to node.js streams](http://www.youtube.com/watch?v=QgEuZ52OZtU)
