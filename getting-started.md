@@ -28,9 +28,9 @@ gulp.task('default', function() {
 $ gulp
 ```
 
-这个默认的任务将会被运行，并且其实啥也没干。
+这个默认的任务（task）将会被运行，并且其实啥也没干。
 
-想要运行单独的任务，请这样执行 `gulp <task> <othertask>`.
+想要运行单独的任务（task），请这样执行 `gulp <task> <othertask>`.
 
 ## 现在从哪开始？
 
