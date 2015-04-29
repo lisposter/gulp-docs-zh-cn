@@ -25,7 +25,7 @@ gulp.src('client/templates/*.jade')
 
 通过 [glob-stream] 所传递给 [node-glob] 的参数。
 
-除了 [node-glob][node-glob documentation] 和 [glob-stream] 所支持的参数外，gulp 增加了一些额外的选项参数：
+除了 [node-glob][node-glob 文档] 和 [glob-stream] 所支持的参数外，gulp 增加了一些额外的选项参数：
 
 #### options.buffer
 类型： `Boolean`
