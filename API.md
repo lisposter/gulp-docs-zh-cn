@@ -1,11 +1,10 @@
-## gulp API docs
+## gulp API 文档
 
 ### gulp.src(globs[, options])
 
-Emits files matching provided glob or an array of globs. 
-Returns a [stream](http://nodejs.org/api/stream.html) of [Vinyl files](https://github.com/wearefractal/vinyl-fs) 
-that can be [piped](http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options) 
-to plugins.
+输出（Emits）符合所提供的匹配模式（glob）或者匹配模式的数组（array of globs）的文件。
+将返回一个 [Vinyl files](https://github.com/wearefractal/vinyl-fs) 的 [stream](http://nodejs.org/api/stream.html)
+它可以被 [piped](http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options) 到别的插件中。
 
 ```javascript
 gulp.src('client/templates/*.jade')
@@ -14,51 +13,51 @@ gulp.src('client/templates/*.jade')
   .pipe(gulp.dest('build/minified_templates'));
 ```
 
-`glob` refers to [node-glob syntax](https://github.com/isaacs/node-glob) or it can be a direct file path.
+`glob` 请参考 [node-glob 语法](https://github.com/isaacs/node-glob) 或者，你也可以直接写文件的路径。
 
 #### globs
-Type: `String` or `Array`
+类型： `String` 或 `Array`
 
-Glob or array of globs to read.
+所要读取的 glob 或者包含 globs 的数组。
 
 #### options
-Type: `Object`
+类型： `Object`
 
-Options to pass to [node-glob] through [glob-stream].
+通过 [glob-stream] 所传递给 [node-glob] 的参数。
 
-gulp adds some additional options in addition to the [options supported by node-glob][node-glob documentation] and [glob-stream]:
+除了 [node-glob][node-glob documentation] 和 [glob-stream] 所支持的参数外，gulp 增加了一些额外的选项参数：
 
 #### options.buffer
-Type: `Boolean`
-Default: `true`
+类型： `Boolean`
+默认值： `true`
 
-Setting this to `false` will return `file.contents` as a stream and not buffer files. This is useful when working with large files. **Note:** Plugins might not implement support for streams.
+如果该项被设置为 `false`，那么将会以 stream 方式返回 `file.contents` 而不是文件 buffer 的形式。这在处理一些大文件的时候将会很有用。**注意：**插件可能并不会实现对 stream 的支持。
 
 #### options.read
-Type: `Boolean`
-Default: `true`
+类型： `Boolean`
+默认值： `true`
 
-Setting this to `false` will return `file.contents` as null and not read the file at all.
+如果该项被设置为 `false`， 那么 `file.contents` 会返回空值（null），也就是并不会去读取文件。
 
 #### options.base
-Type: `String`
-Default: everything before a glob starts (see [glob2base])
+类型： `String`
+默认值： 将会加在 glob 之前 (请看 [glob2base])
 
-E.g., consider `somefile.js` in `client/js/somedir`:
+如, 请想像一下在一个路径为 `client/js/somedir` 的目录中，有一个文件叫 `somefile.js` ：
 
 ```js
-gulp.src('client/js/**/*.js') // Matches 'client/js/somedir/somefile.js' and resolves `base` to `client/js/`
+gulp.src('client/js/**/*.js') // 匹配 'client/js/somedir/somefile.js' 并且将 `base` 解析为 `client/js/`
   .pipe(minify())
-  .pipe(gulp.dest('build'));  // Writes 'build/somedir/somefile.js'
+  .pipe(gulp.dest('build'));  // 写入 'build/somedir/somefile.js'
 
 gulp.src('client/js/**/*.js', { base: 'client' })
   .pipe(minify())
-  .pipe(gulp.dest('build'));  // Writes 'build/js/somedir/somefile.js'
+  .pipe(gulp.dest('build'));  // 写入 'build/js/somedir/somefile.js'
 ```
 
 ### gulp.dest(path[, options])
 
-Can be piped to and it will write files. Re-emits all data passed to it so you can pipe to multiple folders.  Folders that don't exist will be created.
+能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
 
 ```javascript
 gulp.src('./client/templates/*.jade')
@@ -68,80 +67,79 @@ gulp.src('./client/templates/*.jade')
   .pipe(gulp.dest('./build/minified_templates'));
 ```
 
-The write path is calculated by appending the file relative path to the given
-destination directory. In turn, relative paths are calculated against the file base. 
-See `gulp.src` above for more info.
+文件被写入的路径是以所给的相对路径根据所给的目标目录计算而来。类似的，相对路径也可以根据所给的 base 来计算。
+请查看上述的 `gulp.src` 来了解更多信息。
 
 #### path
-Type: `String` or `Function`
+类型： `String` or `Function`
 
-The path (output folder) to write files to. Or a function that returns it, the function will be provided a [vinyl File instance](https://github.com/wearefractal/vinyl).
+文件将被写入的路径（输出目录）。也可以传入一个函数，在函数中返回相应路径，这个函数也可以由 [vinyl 文件实例](https://github.com/wearefractal/vinyl) 来提供。
 
 #### options
-Type: `Object`
+类型： `Object`
 
 #### options.cwd
-Type: `String`
-Default: `process.cwd()`
+类型： `String`
+默认值： `process.cwd()`
 
-`cwd` for the output folder, only has an effect if provided output folder is relative.
+输出目录的 `cwd` 参数，只在所给的输出目录是相对路径时候有效。
 
 #### options.mode
-Type: `String`
-Default: `0777`
+类型： `String`
+默认值： `0777`
 
-Octal permission string specifying mode for any folders that need to be created for output folder.
+八进制权限字符，用以定义所有在输出目录中所创建的目录的权限。
 
 ### gulp.task(name[, deps], fn)
 
-Define a task using [Orchestrator].
+定义一个使用 [Orchestrator] 实现的任务（task）。
 
 ```js
 gulp.task('somename', function() {
-  // Do stuff
+  // 做一些事
 });
 ```
 
 #### name
 
-The name of the task. Tasks that you want to run from the command line should not have spaces in them.
+任务的名字，如果你需要在命令行中运行你的某些任务，那么，请不要在名字中使用空格。
 
 #### deps
-Type: `Array`
+类型： `Array`
 
-An array of tasks to be executed and completed before your task will run.
+一个包含任务列表的数组，这些任务会在你当前任务运行之前完成。
 
 ```js
 gulp.task('mytask', ['array', 'of', 'task', 'names'], function() {
-  // Do stuff
+  // 做一些事
 });
 ```
 
-**Note:** Are your tasks running before the dependencies are complete?  Make sure your dependency tasks are correctly using the async run hints: take in a callback or return a promise or event stream.
+**注意：** 你的任务是否在这些前置依赖的任务完成之前运行了？请一定要确保你所依赖的任务列表中的任务都使用了正确的异步执行方式：使用一个 callback，或者返回一个 promise 或 stream。
 
 #### fn
 
-The function that performs the task's operations. Generally this takes the form of `gulp.src().pipe(someplugin())`.
+该函数定义任务所要执行的一些操作。通常来说，它会是这种形式：`gulp.src().pipe(someplugin())`。
 
-#### Async task support
+#### 异步任务支持
 
-Tasks can be made asynchronous if its `fn` does one of the following:
+任务可以异步执行，如果 `fn` 能做到以下其中一点：
 
-##### Accept a callback
+##### 接受一个 callback
 
 ```javascript
-// run a command in a shell
+// 在 shell 中执行一个命令
 var exec = require('child_process').exec;
 gulp.task('jekyll', function(cb) {
-  // build Jekyll
+  // 编译 Jekyll
   exec('jekyll build', function(err) {
-    if (err) return cb(err); // return error
-    cb(); // finished task
+    if (err) return cb(err); // 返回 error
+    cb(); // 完成 task
   });
 });
 ```
 
-##### Return a stream
+##### 返回一个 stream
 
 ```js
 gulp.task('somename', function() {
@@ -152,7 +150,7 @@ gulp.task('somename', function() {
 });
 ```
 
-##### Return a promise
+##### 返回一个 promise
 
 ```javascript
 var Q = require('q');
@@ -160,7 +158,7 @@ var Q = require('q');
 gulp.task('somename', function() {
   var deferred = Q.defer();
 
-  // do async stuff
+  // 执行异步的操作
   setTimeout(function() {
     deferred.resolve();
   }, 1);
@@ -169,58 +167,57 @@ gulp.task('somename', function() {
 });
 ```
 
-**Note:** By default, tasks run with maximum concurrency -- e.g. it launches all the tasks at once and waits for nothing. If you want to create a series where tasks run in a particular order, you need to do two things:
+**注意：** 默认的，task 将以最大的并发数执行，也就是说，gulp 会一次性运行所有的 task 并且不做任何等待。如果你想要创建一个序列化的 task 队列，并以特定的顺序执行，你需要做两件事：
 
-- give it a hint to tell it when the task is done,
-- and give it a hint that a task depends on completion of another.
+- 给出一个提示，来告知 task 什么时候执行完毕，
+- 并且再给出一个提示，来告知一个 task 依赖另一个 task 的完成。
 
-For these examples, let's presume you have two tasks, "one" and "two" that you specifically want to run in this order:
+对于这个例子，让我们先假定你有两个 task，"one" 和 "two"，并且你希望它们按照这个顺序执行：
 
-1. In task "one" you add a hint to tell it when the task is done.  Either take in a callback and call it when you're
-done or return a promise or stream that the engine should wait to resolve or end respectively.
+1. 在 "one" 中，你加入一个提示，来告知什么时候它会完成：可以再完成时候返回一个 callback，或者返回一个 promise 或 stream，这样系统会去等待它完成。
 
-2. In task "two" you add a hint telling the engine that it depends on completion of the first task.
+2. 在 "two" 中，你需要添加一个提示来告诉系统它需要依赖第一个 task 完成。
 
-So this example would look like this:
+因此，这个例子的实际代码将会是这样：
 
 ```js
 var gulp = require('gulp');
 
-// takes in a callback so the engine knows when it'll be done
+// 返回一个 callback，因此系统可以知道它什么时候完成
 gulp.task('one', function(cb) {
-    // do stuff -- async or otherwise
-    cb(err); // if err is not null and not undefined, the run will stop, and note that it failed
+    // 做一些事 -- 异步的或者其他的
+    cb(err); // 如果 err 不是 null 或 undefined，则会停止执行，且注意，这样代表执行失败了
 });
 
-// identifies a dependent task must be complete before this one begins
+// 定义一个所依赖的 task 必须在这个 task 执行之前完成
 gulp.task('two', ['one'], function() {
-    // task 'one' is done now
+    // 'one' 完成后
 });
 
 gulp.task('default', ['one', 'two']);
 ```
 
 
-### gulp.watch(glob [, opts], tasks) or gulp.watch(glob [, opts, cb])
+### gulp.watch(glob [, opts], tasks) 或 gulp.watch(glob [, opts, cb])
 
-Watch files and do something when a file changes. This always returns an EventEmitter that emits `change` events.
+监视文件，并且可以在文件发生改动时候做一些事情。它总会返回一个 EventEmitter 来发射（emit） `change` 事件。
 
 ### gulp.watch(glob[, opts], tasks)
 
 #### glob
-Type: `String` or `Array`
+类型： `String` or `Array`
 
-A single glob or array of globs that indicate which files to watch for changes.
+一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
 
 #### opts
-Type: `Object`
+类型： `Object`
 
-Options, that are passed to [`gaze`](https://github.com/shama/gaze).
+传给 [`gaze`](https://github.com/shama/gaze) 的参数。
 
 #### tasks
-Type: `Array`
+类型： `Array`
 
-Names of task(s) to run when a file changes, added with `gulp.task()`
+需要在文件变动后执行的一个或者多个通过 `gulp.task()` 创建的 task 的名字，
 
 ```js
 var watcher = gulp.watch('js/**/*.js', ['uglify','reload']);
@@ -232,19 +229,19 @@ watcher.on('change', function(event) {
 ### gulp.watch(glob[, opts, cb])
 
 #### glob
-Type: `String` or `Array`
+类型： `String` or `Array`
 
-A single glob or array of globs that indicate which files to watch for changes.
+一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
 
 #### opts
-Type: `Object`
+类型： `Object`
 
-Options, that are passed to [`gaze`](https://github.com/shama/gaze).
+传给 [`gaze`](https://github.com/shama/gaze) 的参数。
 
 #### cb(event)
-Type: `Function`
+类型： `Function`
 
-Callback to be called on each change.
+每次变动需要执行的 callback。
 
 ```js
 gulp.watch('js/**/*.js', function(event) {
@@ -252,20 +249,20 @@ gulp.watch('js/**/*.js', function(event) {
 });
 ```
 
-The callback will be passed an object, `event`, that describes the change:
+callback 会被传入一个名为 `event` 的对象。这个对象描述了所监控到的变动：
 
 ##### event.type
-Type: `String`
+类型： `String`
 
-The type of change that occurred, either `added`, `changed` or `deleted`.
+发生的变动的类型：`added`, `changed` 或者 `deleted`。
 
 ##### event.path
-Type: `String`
+类型： `String`
 
-The path to the file that triggered the event.
+触发了该事件的文件的路径。
 
 
-[node-glob documentation]: https://github.com/isaacs/node-glob#options
+[node-glob 文档]: https://github.com/isaacs/node-glob#options
 [node-glob]: https://github.com/isaacs/node-glob
 [glob-stream]: https://github.com/wearefractal/glob-stream
 [gulp-if]: https://github.com/robrich/gulp-if
