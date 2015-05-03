@@ -1,21 +1,21 @@
-# Dealing with streams
+# 使用 Stream 处理
 
-> It is highly recommended to write plugins supporting streams. Here is some information on creating a gulp plugin that supports streams.
+> 极力推荐让缩写的插件支持 stream。这里有一些关于让插件支持 stream 的一些有用信息。
 
-> Make sure to follow the best practice regarding error handling and add the line that make the gulp plugin re-emit the first error caught during the transformation of the content
+> 请确保使用处理错误的最佳实践，并且加入一行代码，使得 gulp 能在转换内容的期间在捕获到第一个错误时候正确报出错误。
 
-[Writing a Plugin](README.md) > Writing stream based plugins
+[编写插件](README.md) > 编写以 stream 为基础的插件
 
-## Dealing with streams
+## 使用 stream 处理
 
-Let's implement a plugin prepending some text to files. This plugin supports all possible forms of file.contents.
+让我们来实现一个用于在文件头部插入一些文本的插件，这个插件支持 file.contents 所有可能的形式。
 
 ```js
 var through = require('through2');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 
-// consts
+// 常量
 const PLUGIN_NAME = 'gulp-prefixer';
 
 function prefixStream(prefixText) {
@@ -24,15 +24,15 @@ function prefixStream(prefixText) {
   return stream;
 }
 
-// plugin level function (dealing with files)
+// 插件级别函数 (处理文件)
 function gulpPrefixer(prefixText) {
   if (!prefixText) {
     throw new PluginError(PLUGIN_NAME, 'Missing prefix text!');
   }
 
-  prefixText = new Buffer(prefixText); // allocate ahead of time
+  prefixText = new Buffer(prefixText); // 预先分配
 
-  // creating a stream through which each file will pass
+  // 创建一个让每个文件通过的 stream 通道
   var stream = through.obj(function(file, enc, cb) {
     if (file.isBuffer()) {
       this.emit('error', new PluginError(PLUGIN_NAME, 'Buffers not supported!'));
@@ -40,29 +40,29 @@ function gulpPrefixer(prefixText) {
     }
 
     if (file.isStream()) {
-      // define the streamer that will transform the content
+      // 定义转换内容的 streamer
       var streamer = prefixStream(prefixText);
-      // catch errors from the streamer and emit a gulp plugin error
+      // 从 streamer 中捕获错误，并发出一个 gulp的错误
       streamer.on('error', this.emit.bind(this, 'error'));
-      // start the transformation
+      // 开始转换
       file.contents = file.contents.pipe(streamer);
     }
 
-    // make sure the file goes through the next gulp plugin
+    // 确保文件进去下一个插件
     this.push(file);
-    // tell the stream engine that we are done with this file
+    // 告诉 stream 转换工作完成
     cb();
   });
 
-  // returning the file stream
+  // 返回文件 stream
   return stream;
 }
 
-// exporting the plugin main function
+// 暴露（export）插件的主函数
 module.exports = gulpPrefixer;
 ```
 
-The above plugin can be used like this:
+上面的插件可以像这样使用：
 
 ```js
 var gulp = require('gulp');
@@ -73,7 +73,7 @@ gulp.src('files/**/*.js', { buffer: false })
   .pipe(gulp.dest('modified-files'));
 ```
 
-## Some plugins using streams
+## 一些使用 stream 的插件
 
 * [gulp-svgicons2svgfont](https://github.com/nfroidure/gulp-svgiconstosvgfont)
 
