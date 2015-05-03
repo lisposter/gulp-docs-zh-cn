@@ -3,7 +3,7 @@
 * [入门指南](getting-started.md) - 如何开始使用 gulp
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
 * [CLI 文档](CLI.md) - 学习如何调用任务（task）以及一些编译器
-* [写一个插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
+* [编写插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
 * [西班牙语文档][SpanishDocs] - gulp 的西班牙语文档.
 
 

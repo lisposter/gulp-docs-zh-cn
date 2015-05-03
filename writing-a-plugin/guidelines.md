@@ -1,62 +1,62 @@
-# Guidelines
+# 指导
 
-> While these guidelines are totally optional, we **HIGHLY** recommend that everyone follows them. Nobody wants to use a bad plugin. These guidelines will actually help make your life easier by giving you assurance that your plugin fits well within gulp.
+> 这个指导实际上不是必须的，但是我们强烈建议每一个人来遵守。因为没有人会喜欢用一个不好的插件。这个指导能在某种意义上确保你的插件能很好的适应 gulp，以此来让你的生活变得更将轻松。
 
-[Writing a Plugin](README.md) > Guidelines
+[编写插件](README.md) > 指导
 
-1. Your plugin should not do something that can be done easily with an existing node module
-  - For example: deleting a folder does not need to be a gulp plugin. Use a module like [del](https://github.com/sindresorhus/del) within a task instead.
-  - Wrapping every possible thing just for the sake of wrapping it will pollute the ecosystem with low quality plugins that don't make sense within the gulp paradigm.
-  - gulp plugins are for file-based operations! If you find yourself shoehorning a complex process into streams just make a normal node module instead.
-  - A good example of a gulp plugin would be something like gulp-coffee. The coffee-script module does not work with Vinyl out of the box, so we wrap it to add this functionality and abstract away pain points to make it work well within gulp.
-1. Your plugin should only do **one thing**, and do it well.
-  - Avoid config options that make your plugin do completely different tasks
-  - For example: A JS minification plugin should not have an option that adds a header as well
-1. Your plugin shouldn't do things that other plugins are responsible for
-  - It should not concat, [gulp-concat](https://github.com/wearefractal/gulp-concat) does that
-  - It should not add headers, [gulp-header](https://github.com/godaddy/gulp-header) does that
-  - It should not add footers, [gulp-footer](https://github.com/godaddy/gulp-footer) does that
-  - If it's a common but optional use case, document that your plugin is often used with another plugin
-  - Make use of other plugins within your plugin! This reduces the amount of code you have to write and ensures a stable ecosystem.
-1. Your plugin **must be tested**
-  - Testing a gulp plugin is easy, you don't even need gulp to test it
-  - Look at other plugins for examples
-1. Add `gulpplugin` as a keyword in your `package.json` so you show up on our search
-1. Do not throw errors inside a stream
-  - Instead, you should emit it as an **error** event.
-  - If you encounter an error **outside** the stream, such as invalid configuration while creating the stream, you may throw it.
-1. Prefix any errors with the name of your plugin
-  - For example: `gulp-replace: Cannot do regexp replace on a stream`
-  - Use gulp-util's [PluginError](https://github.com/gulpjs/gulp-util#new-pluginerrorpluginname-message-options) class to make this easy
-1. The type of `file.contents` should always be the same going out as it was when it came in
-  - If file.contents is null (non-read) just ignore the file and pass it along
-  - If file.contents is a Stream and you don't support that just emit an error
-    - Do not buffer a stream to shoehorn your plugin to work with streams. This will cause horrible things to happen.
-1. Do not pass the `file` object downstream until you are done with it
-1. Use [`file.clone()`](https://github.com/wearefractal/vinyl#clone) when cloning a file or creating a new one based on a file.
-1. Use modules from our [recommended modules page](recommended-modules.md) to make your life easier
-1. Do NOT require `gulp` as a dependency or peerDependency in your plugin
-  - Using gulp to test or automate your plugin workflow is totally cool, just make sure you put it as a devDependency
-  - Requiring gulp as a dependency of your plugin means that anyone who installs your plugin is also installing a new gulp and its entire dependency tree.
-  - There is no reason you should be using gulp within your actual plugin code. If you find yourself doing this open an issue so we can help you out.
+1. 你的插件不应该去做一些现有 node 模块已经能很容易做到的事情
+  - 比如：删除一个文件夹并不需要做成一个 gulp 插件，在 task 里使用一个类似 [del](https://github.com/sindresorhus/del) 这样的插件即可。
+  - 只是为了封装而封装一些的东西进去，这只会增加很多低质量的插件到生态中，这不符合 gulp 的期望。
+  - gulp 插件都是以文件为基础操作的，如果你发现你正在把一些很复杂的操作塞进 stream 中去，那么，请直接写一个 node 模块就好。
+  - 一个好的 gulp 插件例子像是 gulp-coffee，coffee-script 模块并不能直接和 vinyl 做很好的适配，因此，才去封装它来使用相应的功能，并且将一些比较痛苦的操作抽象出来，做成更简单的 gulp 插件来使用。
+1. 你的插件应该只做**一件事**，并且做好。
+  - 避免使用配置选项，使得你的插件能胜任不同场合的任务。
+  - 比如：一个 JS 压缩插件不应该有一个加头部的选项
+1. 你的插件不能去做一些其他插件做的事：
+  - 不应该去拼接，用 [gulp-concat](https://github.com/wearefractal/gulp-concat) 去做
+  - 不应该去增加头部，用 [gulp-header](https://github.com/godaddy/gulp-header) 去做
+  - 不应该去增加尾部，用 [gulp-footer](https://github.com/godaddy/gulp-footer) 去做
+  - 如果是一个常用的可选的操作，那么，请在文档中注明你的插件通常和其他某个插件一起使用
+  - 在你的插件中使用其他的插件，这能大大减少你的代码量，并保证生态系统的稳定。
+1. 你的插件必须被**测试过**
+  - 测试一个插件很简单，你甚至不需要 gulp 就能测试
+  - 参考其他的插件是怎么做的
+1.  在 `package.json` 中增加一个名为 `gulpplugin` 的关键字，这可以让它能在我们的搜索中出现
+1. 不要再 stream 里面抛出错误
+  - 你应该以触发 **error** 事件来代替
+  - 如果你在 stream 外面遇到错误，比如在创建 stream 时候发现错误的配置选项等，那么你应该抛出它。
+1. 错误需要加上以你插件名字作为前缀
+  - 比如： `gulp-replace: Cannot do regexp replace on a stream`
+  - 使用 gulp-util 的 [PluginError](https://github.com/gulpjs/gulp-util#new-pluginerrorpluginname-message-options) 类来完成它
+1. `file.contents` 的类型需要总是在输入输出中保持一致
+  - 如果 file.contents 为空 (不可读) 请将他忽略，并传过去
+  - 如果 file.contents 是一个 stream，但是你不支持，那么请触发一个错误
+    - 不要把 stream 硬转成 buffer 来使你的插件支持 stream，这会引发很严重的问题。
+1. 在你处理完成之前，不要将 `file` 传到下游去
+1. 使用 [`file.clone()`](https://github.com/wearefractal/vinyl#clone) 来复制一个文件或者创建另一个以此为基础的文件
+1. 使用我们 [模块推荐页](recommended-modules.md) 上列举的模块来让你的开发更加轻松
+1. 不要把 `gulp` 作为一个依赖
+  - 使用 gulp 来测试你的插件的工作流这的确很酷，但请务必确保你将它放到 devDependency 中
+  - 在你的插件中依赖 gulp，这意味着安装你的插件的用户将会重新安装一遍 gulp 以及所有它所依赖的东西。
+  - 没有任何理由说明你需要将 gulp 写到你的插件代码中去，如果你发现你必须这么做，那么请开一个 issue，我们会帮你解决。
 
-## Why are these guidelines so strict?
+## 为什么这些指导这么严格？
 
-gulp aims to be simple for users. By providing strict guidelines we are able to provide a consistent and high-quality ecosystem for everyone. While this does add a little more work and thought for plugin authors, it removes a lot of problems later down the road.
+gulp 的目标是为了让用户觉得简单，通过提供一些严格的指导，我们就能提供一致并且高质量的生态系统给大家。不过，这确实给插件作者增加了一些需要考虑的东西，但是也确保了后面的问题会更少。
 
-### What happens if I don't follow them?
+### 如果我不遵守这些，会发生什么？
 
-npm is open for everyone, and you are free to make whatever you want but these guidelines were prescribed for a reason. There are acceptances tests coming soon that will be integrated into the plugin search. If you fail to adhere to the plugin guidelines it will be publicly visible/sortable via a scoring system. People will always prefer to use plugins that match "the gulp way".
+npm 对每个人来说是免费的，你可以开发任何你想要开发的东西出来，并且不需要遵守这个规定。我们承诺测试机制将会很快建立起来，并且加入我们的插件搜索中。如果你坚持不遵守插件导览，那么这会反应在我们的打分/排名系统上，人们都会更加喜欢去使用一个 "更加 gulp" 的插件。
 
-### What does a good plugin look like?
+### 一个插件大概会是怎么样的？
 
 ```js
-// through2 is a thin wrapper around node transform streams
+// through2 是一个对 node 的 transform streams 简单封装
 var through = require('through2');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 
-// Consts
+// 常量
 const PLUGIN_NAME = 'gulp-prefixer';
 
 function prefixStream(prefixText) {
@@ -65,18 +65,18 @@ function prefixStream(prefixText) {
   return stream;
 }
 
-// Plugin level function(dealing with files)
+// 插件级别函数 (处理文件)
 function gulpPrefixer(prefixText) {
 
   if (!prefixText) {
     throw new PluginError(PLUGIN_NAME, 'Missing prefix text!');
   }
-  prefixText = new Buffer(prefixText); // allocate ahead of time
+  prefixText = new Buffer(prefixText); // 预先分配
 
-  // Creating a stream through which each file will pass
+  // 创建一个让每个文件通过的 stream 通道
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
-      // return empty file
+      // 返回空文件
       cb(null, file);
     }
     if (file.isBuffer()) {
@@ -92,6 +92,6 @@ function gulpPrefixer(prefixText) {
 
 };
 
-// Exporting the plugin main function
+// 暴露（export）插件主函数
 module.exports = gulpPrefixer;
 ```
