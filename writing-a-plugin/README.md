@@ -1,32 +1,32 @@
-# Writing a plugin
+# 编写插件
 
-If you plan to create your own Gulp plugin, you will save time by reading the full documentation.
+如果你打算自己写一个 Gulp 插件，为了节约你的时间，你可以先完整地阅读下这个文档。
 
-* [Guidelines](guidelines.md) (a MUST read)
-* [Using buffers](using-buffers.md)
-* [Dealing with streams](dealing-with-streams.md)
-* [Testing](testing.md)
+* [导览](guidelines.md) (a MUST read)
+* [使用 buffers](using-buffers.md)
+* [使用 streams 来处理](dealing-with-streams.md)
+* [测试](testing.md)
 
-## What it does
+## 它要做什么？
 
-### Streaming file objects
+### 流式处理文件对象（Streaming file objects）
 
-A gulp plugin always returns a stream in [object mode](http://nodejs.org/api/stream.html#stream_object_mode) that does the following:
+gulp 插件总是返回一个 [object mode](http://nodejs.org/api/stream.html#stream_object_mode) 形式的 stream 来做这些事情：
 
-1. Takes in [vinyl File objects](http://github.com/wearefractal/vinyl)
-2. Outputs [vinyl File objects](http://github.com/wearefractal/vinyl)
+1. 接收 [vinyl File 对象](http://github.com/wearefractal/vinyl)
+2. 输出 [vinyl File 对象](http://github.com/wearefractal/vinyl)
 
-These are known as [transform streams](http://nodejs.org/api/stream.html#stream_class_stream_transform_1) (also sometimes called through streams). Transform streams are streams that are readable and writable which manipulate objects as they're being passed through.
+这通常被叫做 [transform streams](http://nodejs.org/api/stream.html#stream_class_stream_transform_1) (有时候也叫做 through streams)。transform streams 是可读又可写的，它会对传给它的对象做一些转换的操作。
 
-### Modifying file content
+### 修改文内容
 
-Vinyl files can have 3 possible forms for the contents attribute:
+Vinyl 文件可以通过三种不同形式来访问文件内容：
 
 - [Streams](dealing-with-streams.md)
 - [Buffers](using-buffers.md)
-- Empty (null) - Useful for things like rimraf, clean, where contents is not needed.
+- 空 (null) - 对于删除, 清理, 等操作来说，会很有用，因为这时候内容是不需要处理的。
 
-## Useful resources
+## 有用的资源
 
 * [File object](https://github.com/wearefractal/gulp-util/#new-fileobj)
 * [PluginError](https://github.com/gulpjs/gulp-util#new-pluginerrorpluginname-message-options)
@@ -35,18 +35,18 @@ Vinyl files can have 3 possible forms for the contents attribute:
 * [gulp-util](https://github.com/wearefractal/gulp-util)
 
 
-## Sample plugins
+## 插件范例
 
 * [sindresorhus' gulp plugins](https://github.com/search?q=%40sindresorhus+gulp-)
 * [Fractal's gulp plugins](https://github.com/search?q=%40wearefractal+gulp-)
 * [gulp-replace](https://github.com/lazd/gulp-replace)
 
 
-## About streams
+## 关于 streams
 
-If you're unfamiliar with streams, you will need to read up on them:
+如果你不熟悉 stream，你可以阅读这些来
 
-* https://github.com/substack/stream-handbook (a MUST read)
+* https://github.com/substack/stream-handbook (必读)
 * http://nodejs.org/api/stream.html
 
-Other libraries that are not file manipulating through streams but are made for use with gulp are tagged with the [gulpfriendly](https://npmjs.org/browse/keyword/gulpfriendly) keyword on npm.
+其他的一些为 gulp 创建的和使用的，但又并非通过 stream 去处理的库，在 npm 上都会被打上 [gulpfriendly](https://npmjs.org/browse/keyword/gulpfriendly) 标签。
