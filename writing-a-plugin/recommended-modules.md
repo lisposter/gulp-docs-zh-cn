@@ -1,23 +1,23 @@
-# Recommended Modules
+# 模块推荐
 
-> Sticking to this curated list of recommended modules will make sure you don't violate the plugin guidelines and ensure consistency across plugins.
+> 遵循这个推荐的模块列表，将会保证你不违反导览的规范，并且保证插件之间的一致性
 
-[Writing a Plugin](README.md) > Recommended Modules
+[编写插件](README.md) > 模块推荐
 
-#### Replacing a file extension
+#### 替换文件后缀名
 
-Use [replace-ext](https://github.com/wearefractal/replace-ext)
+使用 [replace-ext](https://github.com/wearefractal/replace-ext)
 
-#### Errors
+#### 错误
 
-Use [BetterError](https://github.com/wearefractal/BetterError) when it is finished
+当它完成时使用 [BetterError](https://github.com/wearefractal/BetterError)
 
-#### String colors
+#### 字符串颜色
 
-Use [chalk](https://github.com/sindresorhus/chalk)
+使用 [chalk](https://github.com/sindresorhus/chalk)
 
-#### Date formatting
+#### 时间格式
 
-Use [dateformat](https://github.com/felixge/node-dateformat)
+使用 [dateformat](https://github.com/felixge/node-dateformat)
 
-Display as `HH:MM:ss`
+以 `HH:MM:ss` 格式显示
