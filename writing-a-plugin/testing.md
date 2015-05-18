@@ -1,16 +1,16 @@
-# Testing
+# 测试
 
-> Testing your plugin is the only way to ensure quality. It brings confidence to your users and makes your life easier.
+> 测试是保证你的插件质量的唯一途径。这能使你的用户有信心去使用，且能让你更加轻松。
 
-[Writing a Plugin](README.md) > Testing
-
-
-## Tooling
-
-Most plugins use [mocha](https://github.com/visionmedia/mocha),[should](https://github.com/visionmedia/should.js) and [event-stream](https://github.com/dominictarr/event-stream) to help them test. The following examples will use these tools.
+[编写插件](README.md) > Testing
 
 
-## Testing plugins for streaming mode
+## 工具
+
+大多数的插件使用 [mocha](https://github.com/visionmedia/mocha)，[should](https://github.com/visionmedia/should.js) 以及 [event-stream](https://github.com/dominictarr/event-stream) 来做测试。下面的例子也将会使用这些工具。
+
+
+## 测试插件的流处理（streaming）模式
 
 ```js
 var assert = require('assert');
@@ -23,25 +23,25 @@ describe('gulp-prefixer', function() {
 
     it('should prepend text', function(done) {
 
-      // create the fake file
+      // 创建伪文件
       var fakeFile = new File({
         contents: es.readArray(['stream', 'with', 'those', 'contents'])
       });
 
-      // Create a prefixer plugin stream
+      // 创建一个 prefixer 流（stream）
       var myPrefixer = prefixer('prependthis');
 
-      // write the fake file to it
+      // 将伪文件写入
       myPrefixer.write(fakeFile);
 
-      // wait for the file to come back out
+      // 等文件重新出来
       myPrefixer.once('data', function(file) {
-        // make sure it came out the same way it went in
+        // 确保它以相同的方式出来
         assert(file.isStream());
 
-        // buffer the contents to make sure it got prepended to
+        // 缓存内容来确保它已经被处理过（加前缀内容）
         file.contents.pipe(es.wait(function(err, data) {
-          // check the contents
+          // 检查内容
           assert.equal(data, 'prependthisstreamwiththosecontents');
           done();
         }));
@@ -54,7 +54,7 @@ describe('gulp-prefixer', function() {
 ```
 
 
-## Testing plugins for buffer mode
+## 测试插件的 buffer 模式
 
 ```js
 var assert = require('assert');
@@ -67,23 +67,23 @@ describe('gulp-prefixer', function() {
 
     it('should prepend text', function(done) {
 
-      // create the fake file
+      // 创建伪文件
       var fakeFile = new File({
         contents: new Buffer('abufferwiththiscontent')
       });
 
-      // Create a prefixer plugin stream
+      // 创建一个 prefixer 流（stream）
       var myPrefixer = prefixer('prependthis');
 
-      // write the fake file to it
+      // 将伪文件写入
       myPrefixer.write(fakeFile);
 
-      // wait for the file to come back out
+      // 等文件重新出来
       myPrefixer.once('data', function(file) {
-        // make sure it came out the same way it went in
+        // 确保它以相同的方式出来
         assert(file.isBuffer());
 
-        // check the contents
+        // 检查内容
         assert.equal(file.contents.toString('utf8'), 'prependthisabufferwiththiscontent');
         done();
       });
@@ -94,8 +94,8 @@ describe('gulp-prefixer', function() {
 });
 ```
 
- 
-## Some plugins with high-quality Testing
+
+## 一些拥有高质量的测试用例的插件
 
 * [gulp-cat](https://github.com/ben-eb/gulp-cat/blob/master/test.js)
 * [gulp-concat](https://github.com/wearefractal/gulp-concat/blob/master/test/main.js)
