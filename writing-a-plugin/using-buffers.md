@@ -1,29 +1,30 @@
-# Using buffers
+# 使用 buffer
 
-> Here is some information on creating gulp plugin that manipulates buffers.
+> 这里有些关于如何创建一个使用 buffer 来处理的插件的有用信息。
 
-[Writing a Plugin](README.md) > Using buffers
+[编写插件](README.md) > 使用 buffer
 
-## Using buffers
-If your plugin is relying on a buffer based library, you will probably choose to base your plugin around file.contents as a buffer. Let's implement a plugin prepending some text to files:
+## 使用 buffer
+
+如果你的插件依赖着一个基于 buffer 处理的库，你可能会选择让你的插件以 buffer 的形式来处理 file.contents。让我们来实现一个在文件头部插入额外文本的插件：
 
 ```js
 var through = require('through2');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 
-// consts
+// 常量
 const PLUGIN_NAME = 'gulp-prefixer';
 
-// plugin level function (dealing with files)
+// 插件级别的函数（处理文件）
 function gulpPrefixer(prefixText) {
   if (!prefixText) {
     throw new PluginError(PLUGIN_NAME, 'Missing prefix text!');
   }
 
-  prefixText = new Buffer(prefixText); // allocate ahead of time
+  prefixText = new Buffer(prefixText); // 提前分配
 
-  // creating a stream through which each file will pass
+  // 创建一个 stream 通道，以让每个文件通过
   var stream = through.obj(function(file, enc, cb) {
     if (file.isStream()) {
       this.emit('error', new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
@@ -34,22 +35,22 @@ function gulpPrefixer(prefixText) {
       file.contents = Buffer.concat([prefixText, file.contents]);
     }
 
-    // make sure the file goes through the next gulp plugin
+    // 确保文件进入下一个 gulp 插件
     this.push(file);
 
-    // tell the stream engine that we are done with this file
+    // 告诉 stream 引擎，我们已经处理完了这个文件
     cb();
   });
 
-  // returning the file stream
+  // 返回文件 stream
   return stream;
 };
 
-// exporting the plugin main function
+// 导出插件主函数
 module.exports = gulpPrefixer;
 ```
 
-The above plugin can be used like this:
+上述的插件可以这样使用：
 
 ```js
 var gulp = require('gulp');
@@ -60,11 +61,11 @@ gulp.src('files/**/*.js')
   .pipe(gulp.dest('modified-files'));
 ```
 
-## Handling streams
+## 处理 stream
 
-Unfortunately, the above plugin will error when using gulp.src in non-buffered (streaming) mode. You should support streams too if possible. See [Dealing with streams](dealing-with-streams.md) for more information.
+不幸的是，当 gulp.src 如果是以 stream 的形式，而不是 buffer，那么，上面的插件就会报错。如果可以，你也应该让他支持 stream 形式。请查看[使用 Stream 处理](dealing-with-streams.md) 获取更多信息。
 
-## Some plugins based on buffers
+## 一些基于 buffer 的插件
 
 * [gulp-coffee](https://github.com/wearefractal/gulp-coffee)
 * [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
