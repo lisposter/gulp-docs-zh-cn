@@ -1,8 +1,7 @@
-# Bump version number and create new Git tag
+# 改变版本号以及创建一个 git tag
 
-If your project follows a semantic versioning, it may be a good idea to automatize the steps needed to do a release.
-Below you have a simple recipe that bumps the project version, commits the changes to git and creates a 
-new task.
+如果你的项目遵循语义化版本，那么，把那些发布新版本的时候需要做的事情通过自动化的手段去完成将会是个很不错的主意。
+下面有一个简单的范例展示了如何改变项目的版本号，将更新提交到 git，以及创建一个 tag。
 
 ``` javascript
 
@@ -14,9 +13,9 @@ var git = require('gulp-git');
 var fs = require('fs');
 
 gulp.task('bump-version', function () {
-//Note: I have hardcoded the version change type to 'patch' but it may be a good idea to use 
-//      minimist (https://www.npmjs.com/package/minimist) to determine with a command argument whether you are doing 
-//      a 'major', 'minor' or a 'patch' change.
+// 注意：这里我硬编码了更新类型为 'patch'，但是更好的做法是用
+//      minimist (https://www.npmjs.com/package/minimist) 通过检测一个命令行参数来判断你正在做的更新是
+//      一个 'major'， 'minor' 还是一个 'patch'。
   return gulp.src(['./bower.json', './package.json'])
     .pipe(bump({type: "patch"}).on('error', gutil.log))
     .pipe(gulp.dest('./'));
@@ -39,9 +38,9 @@ gulp.task('create-new-tag', function (cb) {
     }
     git.push('origin', 'master', {args: '--tags'}, cb);
   });
-  
+
   function getPackageJsonVersion () {
-    //We parse the json file instead of using require because require caches multiple calls so the version number won't be updated
+    // 这里我们直接解析 json 文件而不是使用 require，这是因为 require 会缓存多次调用，这会导致版本号不会被更新掉
     return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
   };
 });
