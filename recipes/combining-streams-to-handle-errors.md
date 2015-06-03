@@ -1,10 +1,10 @@
-# Combining streams to handle errors
+# 整合 streams 来处理错误
 
-By default, emitting an error on a stream will cause it to be thrown unless it already has a listener attached to the `error` event. This gets a bit tricky when you're working with longer pipelines of streams.
+默认情况下，在 stream 中发生一个错误的话，它会被直接抛出，除非已经有一个时间监听器监听着 `error` 时间。 这在处理一个比较长的管道操作的时候会显得比较棘手。
 
-By using [stream-combiner2](https://github.com/substack/stream-combiner2) you can turn a series of streams into a single stream, meaning you only need to listen to the `error` event in one place in your code.
+通过使用 [stream-combiner2](https://github.com/substack/stream-combiner2)，你可以将一系列的 stream 合并成一个，这意味着，你只需要在你的代码中一个地方添加监听器监听 `error` 时间就可以了。
 
-Here's an example of using it in a gulpfile:
+这里是一个在 gulpfile 中使用它的例子：
 
 ```js
 var combiner = require('stream-combiner2');
@@ -18,8 +18,8 @@ gulp.task('test', function() {
     gulp.dest('public/bootstrap')
   ]);
 
-  // any errors in the above streams will get caught
-  // by this listener, instead of being thrown:
+  // 任何在上面的 stream 中发生的错误，都不会抛出，
+  // 而是会被监听器捕获
   combined.on('error', console.error.bind(console));
 
   return combined;
