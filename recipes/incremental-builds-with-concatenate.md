@@ -1,8 +1,8 @@
-# Incremental rebuilding, including operating on full file sets
+# 增量编译打包，包括处理整所涉及的所有文件
 
-The trouble with incremental rebuilds is you often want to operate on _all_ processed files, not just single files. For example, you may want to lint and module-wrap just the file(s) that have changed, then concatenate it with all other linted and module-wrapped files. This is difficult without the use of temp files.
+在做增量编译打包的时候，有一个比较麻烦的事情，那就是你常常希望操作的是 _所有_ 处理过的文件，而不仅仅是单个的文件。举个例子，你想要只对更改的文件做代码 lint 操作，以及一些模块封装的操作，然后将他们与其他已经 lint 过的，以及已经进行过模块封装的文件合并到一起。如果不用到临时文件的话，这将会非常困难。
 
-Use [gulp-cached](https://github.com/wearefractal/gulp-cached) and [gulp-remember](https://github.com/ahaurw01/gulp-remember) to achieve this.
+使用 [gulp-cached](https://github.com/wearefractal/gulp-cached) 以及 [gulp-remember](https://github.com/ahaurw01/gulp-remember) 来解决这个问题。
 
 ```js
 var gulp = require('gulp');
@@ -17,21 +17,21 @@ var scriptsGlob = 'src/**/*.js';
 
 gulp.task('scripts', function() {
   return gulp.src(scriptsGlob)
-      .pipe(cached('scripts'))        // only pass through changed files
-      .pipe(jshint())                 // do special things to the changed files...
-      .pipe(header('(function () {')) // e.g. jshinting ^^^
-      .pipe(footer('})();'))          // and some kind of module wrapping
-      .pipe(remember('scripts'))      // add back all files to the stream
-      .pipe(concat('app.js'))         // do things that require all files
+      .pipe(cached('scripts'))        // 只传递更改过的文件
+      .pipe(jshint())                 // 对这些更改过的文件做一些特殊的处理...
+      .pipe(header('(function () {')) // 比如 jshinting ^^^
+      .pipe(footer('})();'))          // 增加一些类似模块封装的东西
+      .pipe(remember('scripts'))      // 把所有的文件放回 stream
+      .pipe(concat('app.js'))         // 做一些需要所有文件的操作
       .pipe(gulp.dest('public/'));
 });
 
 gulp.task('watch', function () {
-  var watcher = gulp.watch(scriptsGlob, ['scripts']); // watch the same files in our scripts task
+  var watcher = gulp.watch(scriptsGlob, ['scripts']); // 监视与 scripts 任务中同样的文件
   watcher.on('change', function (event) {
-    if (event.type === 'deleted') {                   // if a file is deleted, forget about it
-      delete cached.caches.scripts[event.path];       // gulp-cached remove api
-      remember.forget('scripts', event.path);         // gulp-remember remove api
+    if (event.type === 'deleted') {                   // 如果一个文件被删除了，则将其忘记
+      delete cached.caches.scripts[event.path];       // gulp-cached 的删除 api
+      remember.forget('scripts', event.path);         // gulp-remember 的删除 api
     }
   });
 });
