@@ -1,18 +1,18 @@
-# Make stream from buffer (memory contents)
+# 将 buffer 变为 stream (内存中的内容)
 
-Sometimes you may need to start a stream with files that their contents are in a variable and not in a physical file. In other words, how to start a 'gulp' stream without using `gulp.src()`.
+有时候，你会需要这样一个 stream，它们的内容保存在一个变量中，而不是在一个实际的文件中。换言之，怎么不使用 `gulp.src()` 而创建一个 'gulp' stream。
 
-Let's say for example that we have a directory with js lib files and another directory with versions of some module. The target of the build would be to create one js file for each version, containing all the libs and the version of the module concatenated.
+我们来举一个例子，我们拥有一个包含 js 库文件的目录，以及一个包含一些模块的不同版本文件的目录。编译的目标是为每个版本创建一个 js 文件，其中包含所有库文件以及相应版本的模块文件拼接后的结果。
 
-Logically we would break it down like this:
+逻辑上我们将把这个拆分为如下步骤：
 
-* load the lib files
-* concatenate the lib file contents
-* load the versions files
-* for each version file, concatenate the libs' contents and the version file contents
-* for each version file, output the result in a file
+* 载入库文件
+* 拼接库文件的内容
+* 载入不同版本的文件
+* 对于每个版本的文件，将其和库文件的内容拼接
+* 对于每个版本的文件，将结果输出到一个文件
 
-Imagine this file structure:
+想象如下的文件结构：
 
 ```sh
 ├── libs
@@ -23,7 +23,7 @@ Imagine this file structure:
     └── version.2.js
 ```
 
-You should get:
+你应该要得到这样的结果：
 
 ```sh
 └── output
@@ -31,7 +31,7 @@ You should get:
     └── version.2.complete.js # lib1.js + lib2.js + version.2.js
 ```
 
-A simple and modular way to do this would be the following:
+一个简单的模块化处理方式将会像下面这样：
 
 ```js
 var gulp = require('gulp');
@@ -44,89 +44,89 @@ var size = require('gulp-size');
 var path = require('path');
 var es = require('event-stream');
 
-var memory = {}; // we'll keep our assets in memory
+var memory = {}; // 我们会将 assets 保存到内存中
 
-// task of loading the files' contents in memory
+// 载入内存中文件内容的任务
 gulp.task('load-lib-files', function() {
-  // read the lib files from the disk
+  // 从磁盘中读取库文件
   return gulp.src('src/libs/*.js')
-  // concatenate all lib files into one
+  // 将所有库文件拼接到一起
   .pipe(concat('libs.concat.js'))
-  // tap into the stream to get each file's data
+  // 接入 stream 来获取每个文件的数据
   .pipe(tap(function(file) {
-    // save the file contents in memory
+    // 保存文件的内容到内存
     memory[path.basename(file.path)] = file.contents.toString();
   }));
 });
 
 gulp.task('load-versions', function() {
   memory.versions = {};
-  // read the lib files from the disk
+  // 从磁盘中读取文件
   return gulp.src('src/versions/version.*.js')
-  // tap into the stream to get each file's data
+  // 接入 stream 来获取每个文件的数据
   .pipe( tap(function(file) {
-    // save the file contents in the assets
+    // 在 assets 中保存文件的内容
     memory.versions[path.basename(file.path)] = file.contents.toString();
   }));
 });
 
 gulp.task('write-versions', function() {
-  // we store all the different version file names in an array
+  // 我们将不容版本的文件的名字保存到一个数组中
   var availableVersions = Object.keys(memory.versions);
-  // we make an array to store all the stream promises
+  // 我们创建一个数组来保存所有的 stream 的 promise
   var streams = [];
 
   availableVersions.forEach(function(v) {
-    // make a new stream with fake file name
+    // 以一个假文件名创建一个新的 stream
     var stream = source('final.' + v);
-    // we load the data from the concatenated libs
+    // 从拼接后的文件中读取数据
     var fileContents = memory['libs.concat.js'] +
-      // we add the version's data
+      // 增加版本文件的数据
       '\n' + memory.versions[v];
 
     streams.push(stream);
 
-    // write the file contents to the stream
+    // 将文件的内容写入 stream
     stream.write(fileContents);
 
     process.nextTick(function() {
-      // in the next process cycle, end the stream
+      // 在下一次处理循环中结束 stream
       stream.end();
     });
 
     stream
-    // transform the raw data into the stream, into a vinyl object/file
+    // 转换原始数据到 stream 中去，到一个 vinyl 对象/文件
     .pipe(vinylBuffer())
-    //.pipe(tap(function(file) { /* do something with the file contents here */ }))
+    //.pipe(tap(function(file) { /* 这里可以做一些对文件内容的处理操作 */ }))
     .pipe(gulp.dest('output'));
   });
 
   return es.merge.apply(this, streams);
 });
 
-//============================================ our main task
+//============================================ 我们的主任务
 gulp.task('default', function(taskDone) {
   runSequence(
-    ['load-lib-files', 'load-versions'],  // load the files in parallel
-    'write-versions',  // ready to write once all resources are in memory
-    taskDone           // done
+    ['load-lib-files', 'load-versions'],  // 并行载入文件
+    'write-versions',  // 一旦所有资源进入内存便可以做写入操作了
+    taskDone           // 完成
   );
 });
 
-//============================================ our watcher task
-// only watch after having run 'default' once so that all resources
-// are already in memory
+//============================================ 我们的监控任务
+// 只在运行完 'default' 任务后运行，
+// 这样所有的资源都已经在内存中了
 gulp.task('watch', ['default'], function() {
   gulp.watch('./src/libs/*.js', function() {
     runSequence(
-      'load-lib-files',  // we only have to load the changed files
+      'load-lib-files',  // 我们只需要载入更改过的文件
       'write-versions'
     );
   });
 
   gulp.watch('./src/versions/*.js', function() {
     runSequence(
-      'load-versions',  // we only have to load the changed files
+      'load-versions',  // 我们只需要载入更改过的文件
       'write-versions'
     );
   });
