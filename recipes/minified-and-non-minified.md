@@ -1,6 +1,6 @@
-# Output both a minified and non-minified version
+# 同时输出一个压缩过和一个未压缩版本的文件
 
-Outputting both a minified and non-minified version of your combined JavaScript files can be achieved by using `gulp-rename` and piping to `dest` twice (once before minifying and once after minifying):
+同时输出压缩过的和未压缩版本的文件可以通过使用 `gulp-rename` 然后 pipe 到 `dest` 两次来实现 (一次是压缩之前的，一次是压缩后的)：
 
 ```js
 'use strict';
@@ -13,9 +13,9 @@ var DEST = 'build/';
 
 gulp.task('default', function() {
   return gulp.src('foo.js')
-    // This will output the non-minified version
+    // 这会输出一个未压缩过的版本
     .pipe(gulp.dest(DEST))
-    // This will minify and rename to foo.min.js
+    // 这会输出一个压缩过的并且重命名未 foo.min.js 的文件
     .pipe(uglify())
     .pipe(rename({ extname: '.min.js' }))
     .pipe(gulp.dest(DEST));
