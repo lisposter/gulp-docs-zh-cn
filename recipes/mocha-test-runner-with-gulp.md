@@ -1,6 +1,6 @@
-# Mocha test-runner with gulp
+# 在 gulp 中运行 Mocha 测试
 
-### Passing shared module in all tests
+### 运行所有的测试用例
 
 ```js
 // npm install gulp gulp-mocha
@@ -19,7 +19,7 @@ gulp.task('default', function() {
 });
 ```
 
-### Running mocha tests when files change
+### 在文件改动时候运行 mocha 测试用例
 
 ```js
 // npm install gulp gulp-mocha gulp-util
