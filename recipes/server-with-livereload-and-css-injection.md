@@ -1,4 +1,4 @@
-# 拥有实时刷新（live-reloading）和 CSS 注入的服务器
+# 拥有实时重载（live-reloading）和 CSS 注入的服务器
 
 使用 [BrowserSync](http://browsersync.io) 和 gulp，你可以轻松地创建一个开发服务器，然后同一个 WiFi 中的任何设备都可以方便地访问到。BrowserSync 同时集成了 live-reload 所以不需要另外做配置了。
 

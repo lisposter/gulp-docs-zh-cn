@@ -1,4 +1,4 @@
-# Swig 亦即 YAML front-matter 模板
+# Swig 以及 YAML front-matter 模板
 模板可以使用 `gulp-swig` 和 `gulp-front-matter` 来设置：
 
 ##### `page.html`
