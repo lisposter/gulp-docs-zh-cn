@@ -1,6 +1,6 @@
-# Generating a file per folder
+# 每个文件夹生成单独一个文件
 
-If you have a set of folders, and wish to perform a set of tasks on each, for instance...
+如果你有一整套的文件目录，并且希望执行相应的一套任务，比如...
 
 ```
 /scripts
@@ -8,7 +8,7 @@ If you have a set of folders, and wish to perform a set of tasks on each, for in
 /scripts/angularjs/*.js
 ```
 
-...and want to end up with...
+...然后希望完成如下的结果h...
 
 ```
 /scripts
@@ -16,7 +16,7 @@ If you have a set of folders, and wish to perform a set of tasks on each, for in
 /scripts/angularjs.min.js
 ```
 
-...you'll need to do something like the following...
+...你将会需要像下面所示的东西...
 
 ``` javascript
 var fs = require('fs');
@@ -40,11 +40,11 @@ gulp.task('scripts', function() {
    var folders = getFolders(scriptsPath);
 
    var tasks = folders.map(function(folder) {
-      // concat into foldername.js
-      // write to output
-      // minify
-      // rename to folder.min.js
-      // write to output again
+      // 拼接成 foldername.js
+      // 写入输出
+      // 压缩
+      // 重命名为 folder.min.js
+      // 再一次写入输出
       return gulp.src(path.join(scriptsPath, folder, '/*.js'))
         .pipe(concat(folder + '.js'))
         .pipe(gulp.dest(scriptsPath))
@@ -57,7 +57,7 @@ gulp.task('scripts', function() {
 });
 ```
 
-A few notes:
+注：
 
-- `folders.map` - executes the function once per folder, and returns the async stream
-- `merge` - combines the streams and ends only when all streams emitted end
+- `folders.map` - 在每一个文件夹中分别执行一次函数，并且返回异步 stream
+- `merge` - 汇总 stream，并且在所有的 stream 都完成后完成
