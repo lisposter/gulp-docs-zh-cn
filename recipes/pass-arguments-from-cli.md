@@ -1,4 +1,4 @@
-# Pass arguments from the command line
+# 从命令行传递参数
 
 ```js
 // npm install --save-dev gulp gulp-if gulp-uglify minimist
@@ -18,12 +18,12 @@ var options = minimist(process.argv.slice(2), knownOptions);
 
 gulp.task('scripts', function() {
   return gulp.src('**/*.js')
-    .pipe(gulpif(options.env === 'production', uglify())) // only minify in production
+    .pipe(gulpif(options.env === 'production', uglify())) // 仅在生产环境时候进行压缩
     .pipe(gulp.dest('dist'));
 });
 ```
 
-Then run gulp with:
+然后，通过如下命令运行 gulp：
 
 ```sh
 $ gulp scripts --env development
