@@ -1,10 +1,8 @@
-# Split tasks across multiple files
+# 分离任务到多个文件中
 
-If your `gulpfile.js` is starting to grow too large, you can split the tasks
-into separate files by using the [require-dir](https://github.com/aseemk/requireDir)
-module.
+如果你的 `gulpfile.js` 开始变得很大，你可以通过使用 [require-dir](https://github.com/aseemk/requireDir) 模块将任务分离到多个文件
 
-Imagine the following file structure:
+想象如下的文件结构：
 
 ```
 gulpfile.js
@@ -14,13 +12,13 @@ tasks/
 └── test.js
 ```
 
-Install the `require-dir` module:
+安装 `require-dir` 模块：
 
 ```sh
 npm install --save-dev require-dir
 ```
 
-Add the following lines to your `gulpfile.js` file:
+在 `gulpfile.js` 中增加如下几行代码：
 
 ```js
 var requireDir = require('require-dir');
