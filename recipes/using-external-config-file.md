@@ -1,6 +1,6 @@
-# Using external config file
+# 使用外部配置文件
 
-Beneficial because it's keeping tasks DRY and config.json can be used by another task runner, like `grunt`.
+这有很多好处，因为它能让任务更加符合 DRY 原则，并且 config.json 可以被其他的任务运行器使用，比如 `grunt`。
 
 -
 
