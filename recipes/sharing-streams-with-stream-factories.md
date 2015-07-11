@@ -1,10 +1,10 @@
-# Sharing streams with stream factories
+# 通过 stream 工厂来共享 stream
 
-If you use the same plugins in multiple tasks you might find yourself getting that itch to DRY things up. This method will allow you to create factories to split out your commonly used stream chains.
+如果你在多个任务中使用了相同的插件，你可能发现你很想把这些东西以 DRY 的原则去处理。这个方法可以创建一些工厂来把你经常使用的 stream 链分离出来。
 
-We'll use [lazypipe](https://github.com/OverZealous/lazypipe) to get the job done.
+我们将使用 [lazypipe](https://github.com/OverZealous/lazypipe) 来完成这件事。
 
-This is our sample file:
+这是我们的例子：
 
 ```js
 var gulp = require('gulp');
@@ -31,7 +31,7 @@ gulp.task('coffee', function() {
 });
 ```
 
-and our file after using lazypipe looks like this:
+然后，使用了 lazypipe 之后，将会是这样：
 
 ```js
 var gulp = require('gulp');
@@ -41,7 +41,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var lazypipe = require('lazypipe');
 
-// give lazypipe
+// 赋给 lazypipe
 var jsTransform = lazypipe()
   .pipe(jshint)
   .pipe(jshint.reporter, stylish)
@@ -61,4 +61,4 @@ gulp.task('coffee', function() {
 });
 ```
 
-You can see we split out our JavaScript pipeline (JSHint + Uglify) that was being reused in multiple tasks into a factory. These factories can be reused in as many tasks as you want. You can also nest factories and you can chain factories together for great effect. Splitting out each shared pipeline also gives you one central location to modify if you decide to change up your workflow.
+你可以看到，我们把多个任务中都在使用的 JavaScript 管道（JSHint + Uglify）分离到了一个工厂。工厂可以在任意多的任务中重用。你也可以嵌套这些工厂，或者把它们连接起来，已达到更好的效果。分离出每个共享的管道，也可以让你能够集中地管理，当你的工作流程更改后，你只需要修改一个地方即可。
