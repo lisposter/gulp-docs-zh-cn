@@ -1,5 +1,5 @@
-# Templating with Swig and YAML front-matter
-Templating can be setup using `gulp-swig` and `gulp-front-matter`:
+# Swig 亦即 YAML front-matter 模板
+模板可以使用 `gulp-swig` 和 `gulp-front-matter` 来设置：
 
 ##### `page.html`
 
