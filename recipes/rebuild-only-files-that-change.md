@@ -1,6 +1,6 @@
-# Rebuild only files that change
+# 只重新编译被更改过的文件
 
-With [`gulp-watch`](https://github.com/floatdrop/gulp-watch):
+通过使用 [`gulp-watch`](https://github.com/floatdrop/gulp-watch):
 
 ```js
 var gulp = require('gulp');
