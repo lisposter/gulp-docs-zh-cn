@@ -1,6 +1,6 @@
-# Specifying a new cwd (current working directory)
+# 指定一个新的 cwd (当前工作目录)
 
-This is helpful for projects using a nested directory structure, such as:
+在一个多层嵌套的项目中，这是非常有用的，比如：
 
 ```
 /project
@@ -8,15 +8,15 @@ This is helpful for projects using a nested directory structure, such as:
   /layer2
 ```
 
-You can use the gulp CLI option `--cwd`.
+你可以使用 gulp 的 CLI 参数 `--cwd`.
 
-From the `project/` directory:
+在 `project/` 目中中：
 
 ```sh
 gulp --cwd layer1
 ```
 
-If you only need to specify a cwd for a certain glob, you can use the `cwd` option on a [glob-stream](https://github.com/wearefractal/glob-stream):
+如果你需要对特定的匹配指定一个 cwd，你可以使用 [glob-stream](https://github.com/wearefractal/glob-stream) 的 `cwd` 选项：
 
 ```js
 gulp.src('./some/dir/**/*.js', { cwd: 'public' });
