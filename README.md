@@ -1,13 +1,13 @@
-# gulp 中文文档
+# [gulp](https://github.com/gulpjs/gulp) 简体中文文档
 
 * [入门指南](getting-started.md) - 如何开始使用 gulp
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
 * [CLI 文档](CLI.md) - 学习如何调用任务（task）以及一些编译器
 * [编写插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
-* [西班牙语文档][SpanishDocs] - gulp 的西班牙语文档.
+* [英文文档][EnglishDocs] - gulp 英文文档.
 
 
-## FAQ
+## 常见问题
 
 常见的问题，请查看 [FAQ](FAQ.md)。
 
@@ -26,7 +26,7 @@
 * [Developing a gulp Edge](http://shop.oreilly.com/product/9781939902146.do)
 
 
-## 文章
+## 文章（英文）
 * [Tagtree intro to gulp video](http://tagtree.tv/gulp)
 * [Introduction to node.js streams](https://github.com/substack/stream-handbook)
 * [Video introduction to node.js streams](http://www.youtube.com/watch?v=QgEuZ52OZtU)
@@ -53,4 +53,4 @@ All the documentation is covered by the CC0 license *(do whatever you want with 
 
 To the extent possible under law, [Fractal](http://wearefractal.com) has waived all copyright and related or neighboring rights to this work.
 
-[SpanishDocs]: https://github.com/bucaran/gulp-docs-es
+[EnglishDocs]: https://github.com/gulpjs/gulp/tree/master/docs
