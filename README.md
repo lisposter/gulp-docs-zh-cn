@@ -2,24 +2,24 @@
 
 * [入门指南](getting-started.md) - 如何开始使用 gulp
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
-* [CLI 文档](CLI.md) - 学习如何调用任务（task）以及一些编译器
-* [编写插件](writing-a-plugin/README.md) - 想写一个 gulp 插件？ 到这来看一些基本文档，并了解下什么样的事情不应该做。
+* [CLI 文档](CLI.md) - 学习如何执行任务（task）以及如何使用一些编译工具
+* [编写插件](writing-a-plugin/README.md) - 所以，你已经在写一个 gulp 插件了么？ 去这儿看一些基本文档，并了解下什么样的事情不应该做
 * [英文文档][EnglishDocs] - gulp 英文文档.
 
 
 ## 常见问题
 
-常见的问题，请查看 [FAQ](FAQ.md)。
+常见问题，请查看 [FAQ](FAQ.md)。
 
 
-## 范例
+## 秘籍
 
-社区中对于常用的一些 gulp 应用场景已经有了一些现成的 [recipes](recipes#recipes)
+社区中对于常用的一些 gulp 应用场景已经有了一些现成的秘籍 [recipes](recipes#recipes)
 
 
 ## 还是有问题？
 
-到 [StackOverflow](http://stackoverflow.com/questions/tagged/gulp) 发一个带有 #gulp 标签的问题，或者在  [Freenode](http://freenode.net/) 上的 [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) 频道寻求帮助。
+到 [StackOverflow](http://stackoverflow.com/questions/tagged/gulp) 发一个带有 #gulp 标签的问题，或者在  [Freenode](http://freenode.net/) 上的 [#gulpjs](http://webchat.freenode.net/?channels=gulpjs) IRC 频道寻求帮助。
 
 
 ## 书籍
