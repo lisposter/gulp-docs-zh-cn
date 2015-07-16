@@ -6,7 +6,7 @@
 $ npm install --global gulp
 ```
 
-#### 2. 作为项目的开发环境依赖（devDependencies）安装：
+#### 2. 作为项目的开发依赖（devDependencies）安装：
 
 ```sh
 $ npm install --save-dev gulp
@@ -28,15 +28,15 @@ gulp.task('default', function() {
 $ gulp
 ```
 
-这个默认的任务（task）将会被运行，并且其实啥也没干。
+默认的名为 default 的任务（task）将会被运行，在这里，这个任务并未做任何事情。
 
-想要运行单独的任务（task），请这样执行 `gulp <task> <othertask>`.
+想要单独执行特定的任务（task），请输入 `gulp <task> <othertask>`。
 
-## 现在从哪开始？
+## 下一步做什么呢？
 
-你已经有了一个空的 gulpfile 并且所需要的都已经安装了。那怎样才算是__真的__入门了呢？查看这些 [recipes](recipes) 和这个 [文章列表](README.md#articles) 来获取更多的信息吧。
+你已经安装了所有必要的东西，并且拥有了一个空的 gulpfile。那怎样才算是__真的__入门了呢？可以查看这些 [秘籍](recipes) 和这个 [文章列表](README.md#articles) 来学习更多的内容。
 
-## .src, .watch, .dest, CLI args - 我怎么去用这些东西？
+## .src, .watch, .dest, CLI 参数 - 我该怎么去用这些东西呢？
 
 要了解 API 规范文档，请查看 [API 文档](API.md).
 
