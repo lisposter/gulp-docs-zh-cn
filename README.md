@@ -42,7 +42,7 @@
 
 ## 例子
 
-- [Web Starter Kit gulpfile](https://github.com/google/web-starter-kit/blob/master/gulpfile.js)
+- [Web Starter Kit gulpfile](https://github.com/google/web-starter-kit/blob/master/gulpfile.babel.js)
 
 
 ## License
