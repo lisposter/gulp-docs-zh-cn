@@ -1,5 +1,6 @@
 # Recipes
 
+* [Automate release workflow](automate-release-workflow.md)
 * [整合 streams 来处理错误](combining-streams-to-handle-errors.md)
 * [删除文件和文件夹](delete-files-folder.md)
 * [使用 watchify 加速 browserify 编译](fast-browserify-builds-with-watchify.md)
@@ -20,5 +21,4 @@
 * [Browserify + Uglify2 和 sourcemaps](browserify-uglify-sourcemap.md)
 * [Browserify + Globs](browserify-with-globs.md)
 * [同时输出一个压缩过和一个未压缩版本的文件](minified-and-non-minified.md)
-* [改变版本号以及创建一个 git tag](bump-version-and-create-git-tag.md)
 * [Swig 亦即 YAML front-matter 模板](templating-with-swig-and-yaml-front-matter.md)
