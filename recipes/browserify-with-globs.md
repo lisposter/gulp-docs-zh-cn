@@ -38,12 +38,7 @@ gulp.task('javascript', function () {
 
   // "globby" 替换了往常的 "gulp.src" 为 Browserify
   // 创建的可读 stream。
-  globby(['./entries/*.js'], function(err, entries) {
-    // 确保任何从 globby 发生的错误都被捕获到
-    if (err) {
-      bundledStream.emit('error', err);
-      return;
-    }
+  globby(['./entries/*.js']).then(function(entries) {
 
     // 创建 Browserify 实例
     var b = browserify({
@@ -55,6 +50,9 @@ gulp.task('javascript', function () {
     // 将 Browserify stream 接入到我们之前创建的 stream 中去
     // 这里是 gulp 式管道正式开始的地方
     b.bundle().pipe(bundledStream);
+  }).catch(function(err) {
+    // ensure any errors from globby are handled
+    bundledStream.emit('error', err);
   });
 
   // 最后，我们返回这个 stream，这样 gulp 会知道什么时候这个任务会完成

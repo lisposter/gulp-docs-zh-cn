@@ -117,6 +117,14 @@ gulp.task('mytask', ['array', 'of', 'task', 'names'], function() {
 
 **注意：** 你的任务是否在这些前置依赖的任务完成之前运行了？请一定要确保你所依赖的任务列表中的任务都使用了正确的异步执行方式：使用一个 callback，或者返回一个 promise 或 stream。
 
+你也可以省略最后那个函数，如果你只是想要执行依赖的任务：
+
+```js
+gulp.task('mytask', ['array', 'of', 'task', 'names']);
+```
+
+**注意：** 这些任务会一次并发执行，因此，请不要假定他们会按顺序开始和结束。
+
 #### fn
 
 该函数定义任务所要执行的一些操作。通常来说，它会是这种形式：`gulp.src().pipe(someplugin())`。

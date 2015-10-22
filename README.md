@@ -4,8 +4,9 @@
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
 * [CLI 文档](CLI.md) - 学习如何执行任务（task）以及如何使用一些编译工具
 * [编写插件](writing-a-plugin/README.md) - 所以，你已经在写一个 gulp 插件了么？ 去这儿看一些基本文档，并了解下什么样的事情不应该做
-* [英文文档][EnglishDocs] - gulp 英文文档.
-
+* [英文文档][EnglishDocs] - gulp Elglish documentation.
+* [西班牙语文档][SpanishDocs] - gulp en Español.
+* [韩文文档][KoreanDocs] - gulp 한국어 참조 문서.
 
 ## 常见问题
 
@@ -54,3 +55,5 @@ All the documentation is covered by the CC0 license *(do whatever you want with 
 To the extent possible under law, [Fractal](http://wearefractal.com) has waived all copyright and related or neighboring rights to this work.
 
 [EnglishDocs]: https://github.com/gulpjs/gulp/tree/master/docs
+[SpanishDocs]: https://github.com/bucaran/gulp-docs-es
+[KoreanDocs]: https://github.com/preco21/gulp-docs-ko
