@@ -1,6 +1,6 @@
 # Recipes
 
-* [Automate release workflow](automate-release-workflow.md)
+* [自动发布工作流](automate-release-workflow.md)
 * [整合 streams 来处理错误](combining-streams-to-handle-errors.md)
 * [删除文件和文件夹](delete-files-folder.md)
 * [使用 watchify 加速 browserify 编译](fast-browserify-builds-with-watchify.md)
