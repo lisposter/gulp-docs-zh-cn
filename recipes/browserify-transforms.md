@@ -1,6 +1,6 @@
 # Browserify + Transforms
 
-[Browserify](http://github.com/substack/node-browserify) 现在已经成为了一个不可或缺的重要工具了，然后要让它能完美的和 gulp 一起协作，还得需要做一些封装处理。先面便是一个使用 Browserify 和 Transforms 的例子。
+[Browserify](http://github.com/substack/node-browserify) 现在已经成为了一个不可或缺的重要工具了，然后要让它能完美的和 gulp 一起协作，还得需要做一些封装处理。下面便是一个使用 Browserify 和 Transforms 的例子。
 
 同时请看: [组合 Streams 来处理错误](https://github.com/gulpjs/gulp/blob/master/docs/recipes/combining-streams-to-handle-errors.md) 范例来查看如何处理你的 stream 中 browserify 或者 uglify 的错误。
 
