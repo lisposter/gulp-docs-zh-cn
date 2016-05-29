@@ -10,7 +10,7 @@
 
 #### 错误
 
-当它完成时使用 [BetterError](https://github.com/wearefractal/BetterError)
+使用 [BetterError](https://github.com/contra/BetterError) 如果完成了的话。
 
 #### 字符串颜色
 

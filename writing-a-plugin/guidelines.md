@@ -13,7 +13,7 @@
   - 避免使用配置选项，使得你的插件能胜任不同场合的任务。
   - 比如：一个 JS 压缩插件不应该有一个加头部的选项
 1. 你的插件不能去做一些其他插件做的事：
-  - 不应该去拼接，用 [gulp-concat](https://github.com/wearefractal/gulp-concat) 去做
+  - 不应该去拼接，用 [gulp-concat](https://github.com/contra/gulp-concat) 去做
   - 不应该去增加头部，用 [gulp-header](https://github.com/godaddy/gulp-header) 去做
   - 不应该去增加尾部，用 [gulp-footer](https://github.com/godaddy/gulp-footer) 去做
   - 如果是一个常用的可选的操作，那么，请在文档中注明你的插件通常和其他某个插件一起使用
@@ -33,7 +33,7 @@
   - 如果 file.contents 是一个 stream，但是你不支持，那么请触发一个错误
     - 不要把 stream 硬转成 buffer 来使你的插件支持 stream，这会引发很严重的问题。
 1. 在你处理完成之前，不要将 `file` 传到下游去
-1. 使用 [`file.clone()`](https://github.com/wearefractal/vinyl#clone) 来复制一个文件或者创建另一个以此为基础的文件
+1. 使用 [`file.clone()`](https://github.com/gulpjs/vinyl#clone) 来复制一个文件或者创建另一个以此为基础的文件
 1. 使用我们 [模块推荐页](recommended-modules.md) 上列举的模块来让你的开发更加轻松
 1. 不要把 `gulp` 作为一个依赖
   - 使用 gulp 来测试你的插件的工作流这的确很酷，但请务必确保你将它放到 devDependency 中

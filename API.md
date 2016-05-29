@@ -1,9 +1,15 @@
 ## gulp API 文档
 
+跳转：
+  [gulp.src](#gulpsrcglobs-options) |
+  [gulp.dest](#gulpdestpath-options) |
+  [gulp.task](#gulptaskname--deps--fn) |
+  [gulp.watch](#gulpwatchglob--opts-tasks-or-gulpwatchglob--opts-cb)
+
 ### gulp.src(globs[, options])
 
 输出（Emits）符合所提供的匹配模式（glob）或者匹配模式的数组（array of globs）的文件。
-将返回一个 [Vinyl files](https://github.com/wearefractal/vinyl-fs) 的 [stream](http://nodejs.org/api/stream.html)
+将返回一个 [Vinyl files](https://github.com/gulpjs/vinyl-fs) 的 [stream](http://nodejs.org/api/stream.html)
 它可以被 [piped](http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options) 到别的插件中。
 
 ```javascript
@@ -18,28 +24,39 @@ gulp.src('client/templates/*.jade')
 #### globs
 类型： `String` 或 `Array`
 
-所要读取的 glob 或者包含 globs 的数组。
+所读取的 glob 或者 glob 数组，glob 使用了 [node-glob 语法] 除非下一版本得到完全支持。
+
+一个 `!` 开头的 glob 会在结果中排除掉到这个地方为止的所匹配到的文件。举个例子，考虑如下的目录结构：
+
+    client/
+      a.js
+      bob.js
+      bad.js
+
+下面的表达式匹配到的结果是 `a.js` 和 `bad.js`：
+
+    gulp.src(['client/*.js', '!client/b*.js', 'client/bad.js'])
 
 #### options
 类型： `Object`
 
 通过 [glob-stream] 所传递给 [node-glob] 的参数。
 
-除了 [node-glob][node-glob 文档] 和 [glob-stream] 所支持的参数外，gulp 增加了一些额外的选项参数：
+除了 [node-glob][node-glob 文档] 和 [glob-stream] 所支持的参数（除了 `ignore`）外，gulp 增加了一些额外的选项参数：
 
-#### options.buffer
+##### options.buffer
 类型： `Boolean`
 默认值： `true`
 
 如果该项被设置为 `false`，那么将会以 stream 方式返回 `file.contents` 而不是文件 buffer 的形式。这在处理一些大文件的时候将会很有用。**注意：**插件可能并不会实现对 stream 的支持。
 
-#### options.read
+##### options.read
 类型： `Boolean`
 默认值： `true`
 
 如果该项被设置为 `false`， 那么 `file.contents` 会返回空值（null），也就是并不会去读取文件。
 
-#### options.base
+##### options.base
 类型： `String`
 默认值： 将会加在 glob 之前 (请看 [glob2base])
 
@@ -73,24 +90,24 @@ gulp.src('./client/templates/*.jade')
 #### path
 类型： `String` or `Function`
 
-文件将被写入的路径（输出目录）。也可以传入一个函数，在函数中返回相应路径，这个函数也可以由 [vinyl 文件实例](https://github.com/wearefractal/vinyl) 来提供。
+文件将被写入的路径（输出目录）。也可以传入一个函数，在函数中返回相应路径，这个函数也可以由 [vinyl 文件实例](https://github.com/gulpjs/vinyl) 来提供。
 
 #### options
 类型： `Object`
 
-#### options.cwd
+##### options.cwd
 类型： `String`
 默认值： `process.cwd()`
 
 输出目录的 `cwd` 参数，只在所给的输出目录是相对路径时候有效。
 
-#### options.mode
+##### options.mode
 类型： `String`
 默认值： `0777`
 
 八进制权限字符，用以定义所有在输出目录中所创建的目录的权限。
 
-### gulp.task(name[, deps], fn)
+### gulp.task(name [, deps] [, fn])
 
 定义一个使用 [Orchestrator] 实现的任务（task）。
 
@@ -101,6 +118,7 @@ gulp.task('somename', function() {
 ```
 
 #### name
+类型：`String`
 
 任务的名字，如果你需要在命令行中运行你的某些任务，那么，请不要在名字中使用空格。
 
@@ -126,8 +144,21 @@ gulp.task('mytask', ['array', 'of', 'task', 'names']);
 **注意：** 这些任务会一次并发执行，因此，请不要假定他们会按顺序开始和结束。
 
 #### fn
+类型：`Function`
 
-该函数定义任务所要执行的一些操作。通常来说，它会是这种形式：`gulp.src().pipe(someplugin())`。
+该函数定义任务所要执行的主要操作。通常来说，它会是这种形式：
+
+```js
+gulp.task('buildStuff', function() {
+  // Do something that "builds stuff"
+  var stream = gulp.src(/*some source path*/)
+  .pipe(somePlugin())
+  .pipe(someOtherPlugin())
+  .pipe(gulp.dest(/*some destination*/));
+
+  return stream;
+  });
+```
 
 #### 异步任务支持
 
@@ -136,13 +167,24 @@ gulp.task('mytask', ['array', 'of', 'task', 'names']);
 ##### 接受一个 callback
 
 ```javascript
-// 在 shell 中执行一个命令
+// 在 shell 中运行一个命令
 var exec = require('child_process').exec;
 gulp.task('jekyll', function(cb) {
-  // 编译 Jekyll
+  // 构建 Jekyll
   exec('jekyll build', function(err) {
-    if (err) return cb(err); // 返回 error
+    if (err) return cb(err); // return error
     cb(); // 完成 task
+  });
+});
+
+// 在 pipe 中使用异步的结果
+gulp.task('somename', function(cb) {
+  getFilesAsync(function(err, res) {
+    if (err) return cb(err);
+    var stream = gulp.src(res)
+      .pipe(minify())
+      .pipe(gulp.dest('build'))
+      .on('end', cb);
   });
 });
 ```
@@ -262,17 +304,16 @@ callback 会被传入一个名为 `event` 的对象。这个对象描述了所�
 ##### event.type
 类型： `String`
 
-发生的变动的类型：`added`, `changed` 或者 `deleted`。
+发生的变动的类型：`added`, `changed`, `deleted` 或者 `renamed`。
 
 ##### event.path
 类型： `String`
 
 触发了该事件的文件的路径。
 
-
-[node-glob 文档]: https://github.com/isaacs/node-glob#options
 [node-glob]: https://github.com/isaacs/node-glob
-[glob-stream]: https://github.com/wearefractal/glob-stream
+[node-glob 文档]: https://github.com/isaacs/node-glob#options
+[node-glob 语法]: https://github.com/isaacs/node-glob
 [gulp-if]: https://github.com/robrich/gulp-if
 [Orchestrator]: https://github.com/robrich/orchestrator
 [glob2base]: https://github.com/wearefractal/glob2base

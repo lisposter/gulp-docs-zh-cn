@@ -98,4 +98,4 @@ describe('gulp-prefixer', function() {
 ## 一些拥有高质量的测试用例的插件
 
 * [gulp-cat](https://github.com/ben-eb/gulp-cat/blob/master/test.js)
-* [gulp-concat](https://github.com/wearefractal/gulp-concat/blob/master/test/main.js)
+* [gulp-concat](https://github.com/contra/gulp-concat/blob/master/test/main.js)

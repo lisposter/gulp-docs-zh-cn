@@ -40,16 +40,16 @@ gulp.task('scripts', function() {
    var folders = getFolders(scriptsPath);
 
    var tasks = folders.map(function(folder) {
-      // 拼接成 foldername.js
-      // 写入输出
-      // 压缩
-      // 重命名为 folder.min.js
-      // 再一次写入输出
       return gulp.src(path.join(scriptsPath, folder, '/*.js'))
+        // 拼接进 foldername.js
         .pipe(concat(folder + '.js'))
+        // 写入输出
         .pipe(gulp.dest(scriptsPath))
+        // 代码压缩
         .pipe(uglify())
+        // 重命名为 folder.min.js
         .pipe(rename(folder + '.min.js'))
+        // 再一次写入输出
         .pipe(gulp.dest(scriptsPath));
    });
 

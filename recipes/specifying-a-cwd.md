@@ -16,7 +16,7 @@
 gulp --cwd layer1
 ```
 
-如果你需要对特定的匹配指定一个 cwd，你可以使用 [glob-stream](https://github.com/wearefractal/glob-stream) 的 `cwd` 选项：
+如果你需要对特定的匹配指定一个 cwd，你可以使用 [glob-stream](https://github.com/gulpjs/glob-stream) 的 `cwd` 选项：
 
 ```js
 gulp.src('./some/dir/**/*.js', { cwd: 'public' });

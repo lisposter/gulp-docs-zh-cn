@@ -79,12 +79,13 @@ gulp.task('write-versions', function() {
   availableVersions.forEach(function(v) {
     // 以一个假文件名创建一个新的 stream
     var stream = source('final.' + v);
+
+    var streamEnd = stream;
+
     // 从拼接后的文件中读取数据
     var fileContents = memory['libs.concat.js'] +
       // 增加版本文件的数据
       '\n' + memory.versions[v];
-
-    streams.push(stream);
 
     // 将文件的内容写入 stream
     stream.write(fileContents);
@@ -94,11 +95,14 @@ gulp.task('write-versions', function() {
       stream.end();
     });
 
-    stream
+    streamEnd = streamEnd
     // 转换原始数据到 stream 中去，到一个 vinyl 对象/文件
     .pipe(vinylBuffer())
     //.pipe(tap(function(file) { /* 这里可以做一些对文件内容的处理操作 */ }))
     .pipe(gulp.dest('output'));
+
+    // 加到 stream 的尾部，不然，task 会在这些处理完成之前被结束
+    streams.push(streamEnd);
   });
 
   return es.merge.apply(this, streams);

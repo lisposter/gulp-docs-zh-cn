@@ -2,8 +2,10 @@
 
 #### 1. 全局安装 gulp：
 
+__如果你之前有全局安装过一个版本的 gulp，请执行一下 `npm rm --global gulp` 来避免和 gulp-cli 冲突__
+
 ```sh
-$ npm install --global gulp
+$ npm install --global gulp-cli
 ```
 
 #### 2. 作为项目的开发依赖（devDependencies）安装：
