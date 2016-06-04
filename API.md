@@ -24,7 +24,7 @@ gulp.src('client/templates/*.jade')
 #### globs
 类型： `String` 或 `Array`
 
-所读取的 glob 或者 glob 数组，glob 使用了 [node-glob 语法] 除非下一版本得到完全支持。
+所读取的 glob 或者 glob 数组，除了 negation(`!`) 以外的 [node-glob 语法] 均被支持。
 
 一个 `!` 开头的 glob 会在结果中排除掉到这个地方为止的所匹配到的文件。举个例子，考虑如下的目录结构：
 
