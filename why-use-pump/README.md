@@ -33,7 +33,7 @@ gulp.task('compress', function () {
 
 ## 处理错误
 
-Since allowing the errors to make it to the uncaught exception handler isn’t
+因为把产生的错误当作uncaught exception来处理对我们没有什么帮助
 useful, we should handle the exceptions properly. Let’s give that a quick shot.
 
 ```javascript
