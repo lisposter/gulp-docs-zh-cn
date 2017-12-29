@@ -33,8 +33,8 @@ gulp.task('compress', function () {
 
 ## 处理错误
 
-因为把产生的错误当作uncaught exception来处理对我们没有什么帮助
-useful, we should handle the exceptions properly. Let’s give that a quick shot.
+因为把产生的错误当作uncaught exception来处理对我们没有什么帮助,
+我们应该更恰当地处理异常。让我们先来看一个简短的例子。
 
 ```javascript
 var gulp = require('gulp');
@@ -50,9 +50,8 @@ gulp.task('compress', function () {
 });
 ```
 
-Unfortunately, Node.js stream’s `pipe` function doesn’t forward errors through
-the chain, so this error handler only handles the errors given by
-`gulp.dest`. Instead we need to handle errors for each stream.
+不幸的是，Node.js 文件流的 `pipe` 函数不会将错误从调用链中传递下去，所以错误处理回调函数
+只会处理 `gulp.dest` 函数所抛出的错误。而不是调用链中抛出的所有错误。
 
 ```javascript
 var gulp = require('gulp');
@@ -74,7 +73,8 @@ gulp.task('compress', function () {
 });
 ```
 
-This is a lot of complexity to add in each of your gulp tasks, and it’s easy to
+像如上这样为调用链中的每次调用都增加一个错误处理函数显得很复杂，并且会很容易忘记这么做。
+很明显，上述处理方式仍不够完美，并且不能指出具体是哪个任务失败了。我们可以修复This is a lot of complexity to add in each of your gulp tasks, and it’s easy to
 forget to do it. In addition, it’s still not perfect, as it doesn’t properly
 signal to gulp’s task system that the task has failed. We can fix this, and we
 can handle the other pesky issues with error propogations with streams, but it’s
