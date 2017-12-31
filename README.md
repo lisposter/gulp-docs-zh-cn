@@ -4,6 +4,7 @@
 * [API 文档](API.md) - 学习 gulp 的输入和输出方式
 * [CLI 文档](CLI.md) - 学习如何执行任务（task）以及如何使用一些编译工具
 * [编写插件](writing-a-plugin/README.md) - 所以，你已经在写一个 gulp 插件了么？ 去这儿看一些基本文档，并了解下什么样的事情不应该做
+* [为什么使用Pump?](why-use-pump/README.md) - 为什么使用 `pump` 模块而不是自己调用 `.pipe` 函数？
 * [英文文档][EnglishDocs] - gulp Elglish documentation.
 * [西班牙语文档][SpanishDocs] - gulp en Español.
 * [韩文文档][KoreanDocs] - gulp 한국어 참조 문서.
