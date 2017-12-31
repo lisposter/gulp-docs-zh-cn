@@ -1,11 +1,11 @@
 # 为什么使用Pump?
 
 当我们使用Node.js文件流提供的 `pipe` 时，错误不会随着 `pipe` 传递，所以原文件流不会随目的流关闭而关闭。
-[`pump`][pump] 解决了这个问题并将错误在回调函数中传递给你。
+[`pump`][pump] 很好地解决了这个问题并将错误信息在回调函数中传递给你。
 
 ## 一个常见的gulpfile例子
 
-在通常的gulpfile中，我们只是简单的将Node.js的文件流返回，然后期待gulp会帮我们处理错误。
+在通常的gulpfile中，我们只是简单的将Node.js的文件流返回，然后期待gulp会帮我们处理这过程中发生的错误。
 
 ```javascript
 // example of a common gulpfile
@@ -22,7 +22,7 @@ gulp.task('compress', function () {
 
 ![pipe error](pipe-error.png)
 
-上述的JavaScript文件中有一个错误，但是抛出的错误信息显然不能提供太多帮助。
+上述的JavaScript文件中有一个错误，但是截图中所抛出的错误信息显然不能为我们Debug提供太多帮助。
 我们想要知道的是文件中的哪一行导致出错，所以为什么会显示这种无用的错误信息呢？
 
 当有一个错误出现在流中，Node.js会触发 `error` 事件，但是如果没有对应的事件处理函数，Node.js并不会调用
@@ -74,17 +74,13 @@ gulp.task('compress', function () {
 ```
 
 像如上这样为调用链中的每次调用都增加一个错误处理函数显得很复杂，并且会很容易忘记这么做。
-很明显，上述处理方式仍不够完美，并且不能指出具体是哪个任务失败了。我们可以修复This is a lot of complexity to add in each of your gulp tasks, and it’s easy to
-forget to do it. In addition, it’s still not perfect, as it doesn’t properly
-signal to gulp’s task system that the task has failed. We can fix this, and we
-can handle the other pesky issues with error propogations with streams, but it’s
-even more work!
+很明显，上述处理方式仍不够完美，并且不能指出具体是哪个任务失败了。我们可以修复这个问题，并且
+解决其它的文件流引起的错误传递的相关问题，但这需要我们做更多的准备工作。
 
-## Using pump
-
-The [`pump`][pump] module is a cheat code of sorts. It’s a wrapper around the
-`pipe` functionality that handles these cases for you, so you can stop hacking
-on your gulpfiles, and get back to hacking new features into your app.
+## 使用 pump
+下面我们看到的 [`pump`][pump] 模块就是用于解决上述问题的金手指。
+它可以将 `pipe` 函数包裹并处理好上述问题，所以你可以不用在gulpfile中再
+多花力气处理这类问题，然后花更多心思为你的应用开发新特性。
 
 ```javascript
 var gulp = require('gulp');
@@ -102,10 +98,8 @@ gulp.task('compress', function (cb) {
 });
 ```
 
-The gulp task system provides a gulp task with a callback, which can signal
-successful task completion (being called with no arguments), or a task failure
-(being called with an Error argument). Fortunately, this is the exact same
-format `pump` uses!
+gulp的任务系统为每个任务提供了一个回调函数，在一个任务的执行完成时调用（不会传递参数给回调函数），或者
+在一个任务失败时调用（会传递一个包含错误信息的参数）。幸运的是这恰恰也是 `pump` 所采用的处理方式。
 
 ![pump error](pump-error.png)
 
